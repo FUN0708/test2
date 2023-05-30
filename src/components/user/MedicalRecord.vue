@@ -1,14 +1,14 @@
 <template>
   <div>
     <el-row >
-      <el-col :span="4">
-        <el-card shadow="never"body-style="padding: 0px" style="height: 70px">
+      <el-col :span="24">
+        <el-card shadow="never" body-style="padding: 0px" style="height: 70px">
           <h2>病历报告</h2>
         </el-card>
       </el-col>
-      <el-col :span="20">
-        <el-card shadow="never" style="height: 70px">
-          <el-col :span="2"><h3 style="margin-top: 7px">{{this.patientInfo.patientName}}</h3></el-col>
+      <el-col :span="24">
+        <el-card shadow="never"  style="height: 70px">
+          <el-col :span="4"><h3 style="margin-top: 7px">姓名： {{this.patientInfo.patientName}}</h3></el-col>
           <el-col :span="18" style="margin-top: 9px">
               <el-col :span="10">身份证号: {{this.patientInfo.patientID}}</el-col>
               <el-col :span="5">月龄: {{this.patientInfo.patientAge}} (月)</el-col>
@@ -25,12 +25,14 @@
       <el-tab-pane label="基本生理参数" id="UserList">
         <base-info :physiological-params="physiologicalParams"></base-info>
       </el-tab-pane>
-      <el-tab-pane label="步态参数报告">
-        <GaitReport :patient-info="patientInfo"></GaitReport>
+      <el-tab-pane label="步态检测项目" id="CheckList">
+        <CheckList></CheckList>
       </el-tab-pane>
-      <el-tab-pane label="姿态评估报告"></el-tab-pane>
-      <el-tab-pane label="量表报告"></el-tab-pane>
-      <el-tab-pane label="既往病史"></el-tab-pane>
+
+      <el-tab-pane label="姿态检测项目">
+      </el-tab-pane>
+      <el-tab-pane label="量表评估项目"></el-tab-pane>
+<!--      <el-tab-pane label="既往病史"></el-tab-pane>-->
     </el-tabs>
   </div>
 
@@ -41,10 +43,16 @@
 import BaseInfo from "../patientReport/BaseInfo";
 import GaitReport from "../patientReport/GaitReport";
 import axios from "axios";
+import ActionReport from "../patientReport/ActionReport";
+import AnkleJointAxis from "../patientReport/AnkleJointAxis";
+import CheckList from "../patientReport/CheckList";
 export default {
 
   name: "UserList",
   components: {
+    CheckList,
+    AnkleJointAxis,
+    ActionReport,
     GaitReport,
     BaseInfo
   },

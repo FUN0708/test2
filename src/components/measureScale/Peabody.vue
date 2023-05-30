@@ -69,7 +69,10 @@ export default {
       );
     },
     getProjectByAge() {
-      axios.post("/peabody/searchProjectByTypeAndAge?age="+this.inputAge+"&type=6", {
+      axios.post("/peabody/searchProjectByTypeAndAge",{
+      // axios.post("/peabody/searchProjectByTypeAndAge?age="+this.inputAge+"&type=6", {
+        age: this.inputAge,
+        type: 6
       }).then(resp =>
       this.projectList = resp.data)
     },

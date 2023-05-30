@@ -95,11 +95,13 @@ export default {
       if(this.labels.length == 0) {
         this.getProject()
       } else {
-        axios.post("/fuglmeyer/getProjectByType?type="+this.labels, {
+        axios.post("/fuglmeyer/getProjectByType", {
+          type: this.labels
+            // ?type="+this.labels
           // type: this.labels
         }).then(resp =>
           this.projectList = resp.data)
-        this.labels = ""
+          this.labels = ""
       }
 
     },

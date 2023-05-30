@@ -1,6 +1,6 @@
 <template>
-  <div style="width: 50%; margin-left: 20%;margin-top:3%">
-    <h2>添加患者信息</h2>
+  <div style="width: 80%; margin-left: 10%;margin-top:1%">
+    <h2>新 建 患 者 档 案</h2>
     <el-card shadow="hover">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" label-position="left" class="demo-ruleForm"
        style="width: 80%; margin-left: 10%">
@@ -18,6 +18,9 @@
         </el-form-item>
         <el-form-item label="联系电话：" prop="patientPhone">
           <el-input v-model="ruleForm.patientPhone"></el-input>
+        </el-form-item>
+        <el-form-item label="详细地址：" prop="patientAddress">
+          <el-input v-model="ruleForm.patientAddress"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm()">保存信息</el-button>
@@ -42,6 +45,7 @@ export default {
         patientSex: '',
         patientID: '',
         patientPhone: '',
+        patientAddress: ''
 
       },
       rules: {
@@ -71,7 +75,8 @@ export default {
             patientName: this.ruleForm.patientName,
             patientID: this.ruleForm.patientID,
             patientSex: this.ruleForm.patientSex,
-            patientPhone: this.ruleForm.patientPhone
+            patientPhone: this.ruleForm.patientPhone,
+            patientAddress: this.patientAddress
           }).then(resp => {
               this.$alert(resp.data.message, '提示', {
                 confirmButtonText: '确定'

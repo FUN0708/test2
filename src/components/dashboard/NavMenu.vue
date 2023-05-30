@@ -21,7 +21,6 @@
             <el-menu-item index="/searchPatient" >患者查询</el-menu-item>
             <el-menu-item index="/medicalRecord">病历查询</el-menu-item>
             <el-menu-item index="/selectCheckItems">检查项目</el-menu-item>
-            <el-menu-item index="1-4">选项4</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
 
@@ -41,8 +40,8 @@
             <el-menu-item index="/peabodyContent">量表项目</el-menu-item>
             <el-menu-item index="/unitExplain">评定单元介绍</el-menu-item>
             <el-menu-item index="/peabodyTraining">训练单元和项目</el-menu-item>
-            <el-menu-item index="2-4">Gesell发育量表</el-menu-item>
-            <el-menu-item index="2-5">Alberta婴儿运动量表</el-menu-item>
+            <el-menu-item index="/disableDevelop">残疾儿童运动发育特征</el-menu-item>
+<!--            <el-menu-item index="2-5">Alberta婴儿运动量表</el-menu-item>-->
           </el-menu-item-group>
         </el-submenu>
 

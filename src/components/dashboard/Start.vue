@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="text-align: right; margin-right: 20%;">
-      <h1>步态检测与分析系统</h1>
+      <h1>运动发育评估</h1>
     </div>
 
   </div>

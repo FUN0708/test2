@@ -18,23 +18,23 @@
       stripe
       style="width: 100%; margin-top: 2%">
       <el-table-column
-        prop="patientID"
+        prop="patientid"
         label="身份证号"
         width="250">
       </el-table-column>
       <el-table-column
-        prop="patientName"
+        prop="patientname"
         label="姓名"
         width="180">
       </el-table-column>
       <el-table-column
-        prop="patientSex"
+        prop="patientsex"
         label="性别"
         width="180">
-        <template slot-scope="scope">{{ scope.row.patientSex === 1 ? '男' : '女' }}</template>
+        <template slot-scope="scope">{{ scope.row.patientsex === 1 ? '男' : '女' }}</template>
       </el-table-column>
       <el-table-column
-        prop="patientPhone"
+        prop="patientphone"
         label="联系电话"
         width="250">
       </el-table-column>
@@ -42,7 +42,7 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            @click="OpenReport(scope.$index, scope.row.patientID,scope.row.patientName, scope.row.patientSex)">查看病历</el-button>
+            @click="OpenReport(scope.$index, scope.row.patientid,scope.row.patientname, scope.row.patientsex)">查看病历</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -66,24 +66,28 @@ export default {
     }
   },
   methods: {
-    OpenReport(index, patientID, patientName, patientSex) {
+    OpenReport(index, patientid, patientname, patientsex) {
       this.$router.push({path: '/medicalRecord', query: {
-        patientID: patientID,
-          patientName: patientName,
-          patientSex: patientSex === 1? '男' : '女',
-          patientAge: this.getAge(patientID)
+        patientID: patientid,
+          patientName: patientname,
+          patientSex: patientsex === 1? '男' : '女',
+          patientAge: this.getAge(patientid)
         }})
       // this.$router.replace('/medicalRecord')
     },
     toAddPatient() {
       this.$router.replace('/addPatient')
     },
+
     getPatientList() {
-      axios.post('/getPatient?searchInfo='+this.inputInfo, {
-        // searchInfo: this.inputInfo
-      }).then(resp =>
-        this.patientList = resp.data)
-    },
+      axios.post('/getPatient', {
+        searchInfo: this.inputInfo
+          // ?searchInfo='+this.inputInfo
+      }).then(resp => {
+        this.patientList = resp.data
+        console.log(this.patientList)
+      })},
+
     getAge(patientID) {
       let val = patientID.length;
       let myDate = new Date();
