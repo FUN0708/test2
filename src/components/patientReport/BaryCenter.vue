@@ -1,6 +1,7 @@
 <template>
   <div>
-    <el-card header="质心移动轨迹" >
+    {{patientInfo.patientID}}
+    <el-card shadow="None">
       <div style="height: 300px" ref="chart1"></div>
       <div style="height: 300px" ref="chart2"></div>
     </el-card>
@@ -12,7 +13,9 @@ import axios from "axios";
 
 export default {
   name: "BaryCenter",
-
+  props: {
+    patientInfo: ''
+  },
   data () {
     return {
       xdata: [],
@@ -25,16 +28,17 @@ export default {
   },
   methods: {
     async getJointAnkle() {
-      axios.post("/getBaryCenter?id=51018319990708292X", {
-        // id: '51018319990708292X',
-        // projectID: '1',
-        // testDate: '2022-10-27',
-        // jointIndex: 15
+      axios.post("/getBaryCenter", {
+        patientID: this.patientInfo.patientID,
+        projectID: '1',
+        testDate: this.patientInfo.testDate,
+        weight: 50,
+        index: 15
       }).then(resp =>
         {
-          this.xdata = resp.data[0]
-          this.ydata = resp.data[1]
-          this.zdata = resp.data[2] // 左脚踝Z数据
+          this.xdata = resp.data.wx
+          this.ydata = resp.data.wy
+          this.zdata = resp.data.wz // 左脚踝Z数据
 
           // console.log(this.xdata)
           this.initCharts1()

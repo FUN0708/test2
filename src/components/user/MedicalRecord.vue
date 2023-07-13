@@ -1,39 +1,61 @@
 <template>
   <div>
-    <el-row >
-      <el-col :span="24">
-        <el-card shadow="never" body-style="padding: 0px" style="height: 70px">
-          <h2>病历报告</h2>
-        </el-card>
-      </el-col>
-      <el-col :span="24">
-        <el-card shadow="never"  style="height: 70px">
-          <el-col :span="4"><h3 style="margin-top: 7px">姓名： {{this.patientInfo.patientName}}</h3></el-col>
-          <el-col :span="18" style="margin-top: 9px">
-              <el-col :span="10">身份证号: {{this.patientInfo.patientID}}</el-col>
-              <el-col :span="5">月龄: {{this.patientInfo.patientAge}} (月)</el-col>
-              <el-col :span="3">性别: {{this.patientInfo.patientSex}}</el-col>
-          </el-col>
-        </el-card>
-      </el-col>
-    </el-row>
-<!--    <div style="width: 100%;height: 1px;background-color: #96b1de;margin-top: 20px"></div>-->
-    <el-tabs
-      router
-      type="border-card"
-      style="margin-top: 20px">
-      <el-tab-pane label="基本生理参数" id="UserList">
-        <base-info :physiological-params="physiologicalParams"></base-info>
-      </el-tab-pane>
-      <el-tab-pane label="步态检测项目" id="CheckList">
-        <CheckList></CheckList>
-      </el-tab-pane>
+    <div style="margin-top: 20px; width: 100%">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item :to="{ path: '/searchPatient' }">患者管理</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/testList' }">病历报告</el-breadcrumb-item>
+        <el-breadcrumb-item>报告详情</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+    <div style="margin-top: 20px">
+      <el-row >
+        <el-col :span="24">
+          <el-card shadow="never"  style="height: 60px">
+            <el-col :span="2">姓名： {{this.patientInfo.patientName}}</el-col>
+            <el-col :span="18">
+              <el-col :span="8">身份证号: {{this.patientInfo.patientID}}</el-col>
+              <el-col :span="5">性别: {{this.patientInfo.patientSex}}</el-col>
+              <el-col :span="5">检查日期: {{this.patientInfo.testDate}}</el-col>
+            </el-col>
+            <el-col :span="2">
+              <vs-button border
+                         @click="toAddReport"
+                         style="height: 30px; width: 150px; margin:0;padding: 0">添加诊断报告</vs-button>
+            </el-col>
+          </el-card>
+        </el-col>
+      </el-row>
+      <!--    <div style="width: 100%;height: 1px;background-color: #96b1de;margin-top: 20px"></div>-->
+      <el-tabs
+        router
+        v-model="activeName"
+        style="margin-top: 20px; height: 200px; font-size: 16px" @tab-click="handleEdit">
+          <el-tab-pane label="生 理 参 数" id="UserList" name="baseinfo">
+            <base-info :physiological-params="physiologicalParams" v-if="activeName==='baseinfo'"></base-info>
+          </el-tab-pane>
+          <el-tab-pane label="步 态 分 析" id="CheckList" name="gait">
+            <CheckList :patientInfo="patientInfo" v-if="activeName==='gait'"></CheckList>
+          </el-tab-pane>
 
-      <el-tab-pane label="姿态检测项目">
-      </el-tab-pane>
-      <el-tab-pane label="量表评估项目"></el-tab-pane>
-<!--      <el-tab-pane label="既往病史"></el-tab-pane>-->
-    </el-tabs>
+          <el-tab-pane label="量 表 评 估" name="scale">
+
+          </el-tab-pane>
+
+<!--        <el-tab-pane label="相似病历检索" name="same_report">-->
+
+<!--        </el-tab-pane>-->
+
+          <el-tab-pane label="运 动 视 频" name="video"></el-tab-pane>
+          <el-tab-pane label="诊 断 结 果" name="report">
+
+          </el-tab-pane>
+
+        <el-tab-pane label="相似病历检索" name="same_report">
+          <SearchReport></SearchReport>
+        </el-tab-pane>
+      </el-tabs>
+    </div>
+
   </div>
 
 
@@ -46,10 +68,15 @@ import axios from "axios";
 import ActionReport from "../patientReport/ActionReport";
 import AnkleJointAxis from "../patientReport/AnkleJointAxis";
 import CheckList from "../patientReport/CheckList";
+import AddReport from "../dataProcess/AddReport";
+import SearchReport from "../patientReport/SearchReport";
+
 export default {
 
   name: "UserList",
   components: {
+    SearchReport,
+    AddReport,
     CheckList,
     AnkleJointAxis,
     ActionReport,
@@ -62,8 +89,9 @@ export default {
         patientID:'',
         patientName: '',
         patientSex: '',
-        patientAge: ''
+        testDate: ''
       },
+      activeName: 'baseinfo',
       physiologicalParams: {
           weight: 17,
           height: 100
@@ -74,18 +102,28 @@ export default {
     this.patientInfo.patientID = this.$route.query.patientID
     this.patientInfo.patientName = this.$route.query.patientName
     this.patientInfo.patientSex = this.$route.query.patientSex
-    this.patientInfo.patientAge = this.$route.query.patientAge
-    this.getPhysiologicalParams(this.patientInfo.patientID)
+    this.patientInfo.testDate= this.$route.query.testDate
+    // this.getPhysiologicalParams(this.patientInfo.patientID)
   },
   methods: {
-    handleEdit(index, row) {
-      console.log(index, row);
+    handleEdit() {
+      // console.log(this.activeName+'hhhh')
+      if(name === 'baseinfo') this.activeName = 'baseinfo'
+      else if(name === 'gait') this.activeName = 'gait'
+      else if(name === 'same_report') this.activeName = 'same_report'
+      else if(name === 'video') this.activeName = 'video'
+      else if(name === 'report') this.activeName = 'report'
     },
-    getPhysiologicalParams(patientID) {
-      this.axios.post('/getPhysiologicalParams?patientID='+patientID)
-        .then(resp =>
-          this.physiologicalParams = resp.data)
+    toAddReport() {
+      this.$router.push({path: '/addReport', params: {
+         patientInfo: this.patientInfo
+        }})
     }
+    // getPhysiologicalParams(patientID) {
+    //   this.axios.post('/getPhysiologicalParams?patientID='+patientID)
+    //     .then(resp =>
+    //       this.physiologicalParams = resp.data)
+    // }
   }
 }
 </script>

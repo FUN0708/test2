@@ -20,11 +20,13 @@
       </div>
       <div class="login-right">
         <el-form ref="loginForm" :model="form" :rules="rules" label-width="80px" class="login-box">
-          <el-form-item label="账号" prop="d_id">
-            <el-input prefix-icon="el-icon-user" type="text" placeholder="请输入账号" v-model="form.d_id"/>
+          <el-form-item  prop="d_id">
+            <vs-input primary border label-placeholder="账号" v-model="form.d_id"/>
+<!--            <el-input prefix-icon="el-icon-user" type="text" placeholder="请输入账号" v-model="form.d_id"/>-->
           </el-form-item>
-          <el-form-item label=" 密码" prop="password">
-            <el-input prefix-icon="el-icon-lock" show-password type="password" placeholder=" 请输入密码" v-model="form.password"/>
+          <el-form-item  prop="password">
+            <vs-input border type="password" label-placeholder="密码" v-model="form.password" style="width: 290px"/>
+<!--            <el-input prefix-icon="el-icon-lock" show-password type="password" placeholder=" 请输入密码" v-model="form.password"/>-->
           </el-form-item>
           <el-form-item>
             <el-button style="width:290px; font-size: 12px" type="primary"  v-on:click="onSubmit()">登录</el-button>
@@ -120,7 +122,7 @@ export default {
           }).then(resp => {
             console.log(resp.data)
             if(resp.data.code === 200) {
-              this.$router.push({path: '/index', params: {
+              this.$router.push({path: '/start', params: {
                 authority: resp.data.authority
                 }})
             } else{

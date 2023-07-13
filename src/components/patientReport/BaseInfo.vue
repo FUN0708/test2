@@ -1,12 +1,15 @@
 <template>
-<div id="BaseInfo" style="float: left; text-align: left; margin-left: 8%">
+<div id="BaseInfo" style="float: left; text-align: left; margin-left: 4%">
 <!--  体重： {{physiologicalParams.weight}}-->
 <!--  身高： {{physiologicalParams.height}}-->
-  <el-row>
-      身高：153  cm
+  <el-row style=" margin-top: 20px">
+    月 龄： 276
   </el-row>
   <el-row style=" margin-top: 20px">
-    体重：45 kg
+      身 高：153  cm
+  </el-row>
+  <el-row style=" margin-top: 20px">
+    体 重：45 kg
   </el-row>
   <el-row style=" margin-top: 20px">
     <b>既往病史</b>
@@ -20,7 +23,9 @@
 <script>
 export default {
   name: "BaseInfo",
-  props: ["physiological-params"],
+  props: {
+    patientInfo: ''
+  },
   data() {
     return {
     }

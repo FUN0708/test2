@@ -1,72 +1,59 @@
 <template>
-  <div>
-    <p style="width: 30%; float: left; text-align: left"><b>项目内容</b></p>
-    <el-button type="primary" plain style="float: right" v-on:click="toUploadFile()">上传检测数据</el-button>
-    <el-table
-      :data="tableData"
-      style="width: 100%; font-size: 16px"
-      :default-sort = "{prop: 'date', order: 'descending'}"
-    >
-      <el-table-column
-        prop="date"
-        label="检 测 日 期"
-        sortable
-        width="400">
-      </el-table-column>
-      <el-table-column
-        prop="name"
-        label="检 测 项 目"
-        sortable
-        width="400">
-      </el-table-column>
-      <el-table-column
-        prop="address"
-        label="操 作"
-        style="float: right"
-        :formatter="formatter">
-        <el-button
-          size="mini"
-          @click="handleEdit(scope.$index, scope.row)">查看详情</el-button>
-      </el-table-column>
-    </el-table>
+  <div style="text-align: left">
+    <el-card>
+      <b>基本步态参数</b>
+      <el-row style="margin-top: 10px">
+        <el-col :span="8">平均步长（米）：0.43</el-col>
+        <el-col :span="8">平均步频（米/秒）：0.46</el-col>
+        <el-col :span="8">平均步宽（米）：0.13</el-col>
+      </el-row>
+      <el-row style="margin-top: 10px">
+        <el-col :span="8">平均步速（米/秒）：</el-col>
+        <el-col :span="8">左脚步幅（米）</el-col>
+        <el-col :span="8">右脚步幅（米）</el-col>
+      </el-row>
+      <el-row style="margin-top: 10px">
+        <el-col :span="12">髋关节最大伸展角（度）：</el-col>
+        <el-col :span="12">髋关节最大屈曲角（度）：</el-col>
+      </el-row>
+      <el-row style="margin-top: 10px">
+        <el-col :span="12">膝关节最大伸展角（度）：</el-col>
+        <el-col :span="12">膝关节最大屈曲角（度）：</el-col>
+      </el-row>
+      <el-row style="margin-top: 10px">
+        <el-col :span="12">质心上下偏移范围（米）：</el-col>
+        <el-col :span="12">质心左右偏移范围（米）：</el-col>
+      </el-row>
+    </el-card>
+    <AnkleJointAxis :patientInfo="patientInfo"></AnkleJointAxis>
+
+    <KneeJointAngle :patientInfo="patientInfo"></KneeJointAngle>
+
+    <HipJointAngle :patientInfo="patientInfo"></HipJointAngle>
+
+    <BaryCenter :patientInfo="patientInfo"></BaryCenter>
   </div>
 </template>
 <style>
 </style>
 <script>
+import GaitReport from "./GaitReport";
+import AnkleJointAxis from "./AnkleJointAxis";
+import KneeJointAngle from "./KneeJointAngle";
+import HipJointAngle from "./HipJointAngle";
+import BaryCenter from "./BaryCenter";
 export default {
   name: "CheckList",
+  components: { BaryCenter, HipJointAngle, KneeJointAngle, AnkleJointAxis, GaitReport},
+  props:{
+    patientInfo: ''
+  },
   data() {
     return {
-      tableData: [{
-        date: '2016-05-02',
-        name: '姿态评估',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        name: '步态评估',
-        address: '上海市普陀区金沙江路 1517 弄'
-      }, {
-        date: '2016-05-01',
-        name: '姿态评估',
-        address: '上海市普陀区金沙江路 1519 弄'
-      }, {
-        date: '2016-05-03',
-        name: '步态评估',
-        address: '上海市普陀区金沙江路 1516 弄'
-      }]
     }
   },
   methods: {
-    formatter(row, column) {
-      return row.address;
-    },
-    handleEdit(index, row) {
-      console.log(index, row);
-    },
-    toUploadFile(){
-      this.$router.replace('/uploadFile')
-    }
+
   }
 }
 </script>

@@ -25,6 +25,20 @@ import BaryCenter from "../components/patientReport/BaryCenter";
 import KneeJointAngle from "../components/patientReport/KneeJointAngle";
 import HipJointAngle from "../components/patientReport/HipJointAngle";
 import UploadFile from "../components/patientReport/UploadFile";
+import Menu from "../components/dashboard/Menu";
+import GaitData from "../components/dataProcess/AddBaseInfo";
+import GaitPlayer from "../components/dataProcess/GaitPlayer";
+import TestList from "../components/user/TestList";
+import PeabodyTest from "../components/patientReport/PeabodyTest";
+import AddTest from "../components/dataProcess/AddTest";
+import AddScales from "../components/dataProcess/AddScales";
+import AddBaseInfo from "../components/dataProcess/AddBaseInfo";
+import GaitUpload from "../components/dataProcess/GaitUpload";
+import FileUpload from "../components/dataProcess/FileUpload";
+import AddReport from "../components/dataProcess/AddReport";
+import SearchReport from "../components/patientReport/SearchReport";
+import ElectMedical from "../components/measureScale/ElectMedical";
+import RecordDetail from "../components/measureScale/RecordDetail";
 
 
 Vue.use(Router)
@@ -50,12 +64,16 @@ export default new Router({
       component: Register
     },
     {
+      path: '/home',
+      component: Menu
+    },
+    {
       path: '/index',
       component: DashBoard,
       children: [
-        { path: '/userInfo', component: UserInfo},
-        { path: '/start', component: Start},
-        { path: '/doctorCenter', component: DocterCenter},
+        {path: '/userInfo', component: UserInfo},
+        {path: '/start', component: Start},
+        {path: '/doctorCenter', component: DocterCenter},
         {path: '/peabodyContent', component: Peabody},
         {path: '/unitExplain', component: PeabodyUnitExplain},
         {path: '/peabodyTraining', component: PeabodyTraining},
@@ -77,7 +95,19 @@ export default new Router({
             {path: '/baseInfo', component: BaseInfo},
             {path: '/gaitReport', component: GaitReport}
           ]
-        }
+        },
+        {path: '/addBaseInfo', component: AddBaseInfo},
+        {path: '/gaitUpload', component: GaitUpload},
+        {path: '/gaitPlayer', component: GaitPlayer},
+        {path: '/testList', component: TestList},
+        {path: '/peabodyTest', component: PeabodyTest},
+        {path: '/addTest', component: AddTest},
+        {path: '/addScales', component: AddScales},
+        {path: '/fileUpload', component: FileUpload},
+        {path: '/addReport', component: AddReport},
+        {path: '/searchReport', component: SearchReport},
+        {path: '/electMedical', component: ElectMedical},
+        {path: '/recordDetail', component: RecordDetail}
       ]
     },
 

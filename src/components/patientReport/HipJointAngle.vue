@@ -1,8 +1,9 @@
 <template>
   <div>
-    <el-card header="左右髋关节角度变化曲线">
+    {{patientInfo.patientID}}
+    <el-card shadow="None">
       <div style="height: 400px" ref="chart1"></div>
-      <div style="height: 400px" ref="chart2"></div>
+<!--      <div style="height: 400px" ref="chart2"></div>-->
     </el-card>
   </div>
 </template>
@@ -12,6 +13,9 @@ import axios from "axios";
 
 export default {
   name: "HipJointAngle",
+  props: {
+    patientInfo: ''
+  },
   data () {
     return {
       ldata: [],
@@ -25,21 +29,21 @@ export default {
   methods: {
     async getJointAnkle() {
       axios.post("/getHipAngle", {
-        patientID: '51018319990708292X',
+        patientID: this.patientInfo.patientID,
         projectID: '1',
-        testDate: '2022-10-27',
-        jointIndex: 15
+        testDate: this.patientInfo.testDate,
+        index: 15
       }).then(resp =>
         {
-          this.ldata = resp.data[0]
-          this.rdata = resp.data[1]
+          this.ldata = resp.data.left_hip
+          this.rdata = resp.data.right_hip
 
           for(let i = 0; i < this.ldata.length; i++){
             this.xdata[i] = i;
           }
           console.log(this.xdata)
           this.initCharts1()
-          this.initCharts2()
+          // this.initCharts2()
           // console.log(resp.data)
         }
 
@@ -51,7 +55,7 @@ export default {
       // 绘制图表
       myChart.setOption({
         title: {
-          text: '左髋关节角度'
+          text: '左右髋关节角度'
         },
         tooltip: {
           trigger: 'axis'
@@ -75,22 +79,31 @@ export default {
         yAxis: {
           type: 'value'
         },
-        dataZoom: [
-          {
-            type: 'inside',
-            start: 0,
-            end: 100
-          },
-          {
-            start: 0,
-            end: 100
-          }
-        ],
+        legend: {
+          data: ['left', 'right']
+        },
+        // dataZoom: [
+        //   {
+        //     type: 'inside',
+        //     start: 0,
+        //     end: 100
+        //   },
+        //   {
+        //     start: 0,
+        //     end: 100
+        //   }
+        // ],
         series: [
           {
             data: this.ldata,
             type: 'line',
             name: 'left',
+            smooth: true
+          },
+          {
+            data: this.rdata,
+            type: 'line',
+            name: 'right',
             smooth: true
           }
         ]

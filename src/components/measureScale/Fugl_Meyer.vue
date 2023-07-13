@@ -11,6 +11,7 @@
       <!--      </el-col>-->
       <el-col :span="14" style="margin-top: 10px; color: #4b8bea;">
         <el-checkbox-group v-model="checkedList" @change="getProjectByType">
+<!--          <vs-checkbox>上肢(坐位)</vs-checkbox>-->
           <el-checkbox label="上肢（坐位）"></el-checkbox>
           <el-checkbox label="腕"></el-checkbox>
           <el-checkbox label="手"></el-checkbox>

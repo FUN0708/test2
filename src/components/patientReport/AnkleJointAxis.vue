@@ -1,8 +1,9 @@
 <template>
   <div>
-    <el-card>
+    {{patientInfo.patientID}}
+    <el-card shadow="None">
       <div style="height: 400px" ref="chart1"></div>
-      <div style="height: 400px" ref="chart2"></div>
+      <div style="height: 400px; margin-top: 20px" ref="chart2"></div>
     </el-card>
   </div>
 </template>
@@ -12,6 +13,9 @@ import axios from "axios";
 
 export default {
   name: "AnkleJointAxis",
+  props: {
+    patientInfo: ''
+  },
   data () {
     return {
       lzdata: [],
@@ -26,11 +30,11 @@ export default {
   },
   methods: {
     async getJointAnkle() {
-      axios.post("/getAnkleJointXAndZ", {
-        patientID: '51018319990708292X',
+      axios.post("/getAnkleJointAxis", {
+        patientID: this.patientInfo.patientID,
         projectID: '1',
-        testDate: '2022-10-27',
-        jointIndex: 15
+        testDate: this.patientInfo.testDate,
+        index: 15
       }).then(resp =>
         {
           this.lxdata = resp.data[0]
@@ -44,18 +48,18 @@ export default {
           // console.log(this.xdata)
           this.initCharts1()
           this.initCharts2()
-          console.log(resp.data)
+          console.log(resp.data.length)
         }
 
       )
     },
     initCharts1 () {
-      let myChart = this.$echarts.init(this.$refs.chart1, 'dark');
+      let myChart = this.$echarts.init(this.$refs.chart1);
       // console.log(this.$refs.chart)
       // 绘制图表
       myChart.setOption({
         title: {
-          text: '左右脚Z轴位移'
+          text: '左右踝关节Z轴位移'
         },
         tooltip: {
           trigger: 'axis'
@@ -82,17 +86,17 @@ export default {
         yAxis: {
           type: 'value'
         },
-        dataZoom: [
-          {
-            type: 'inside',
-            start: 0,
-            end: 100
-          },
-          {
-            start: 0,
-            end: 100
-          }
-        ],
+        // dataZoom: [
+        //   {
+        //     type: 'inside',
+        //     start: 0,
+        //     end: 100
+        //   },
+        //   {
+        //     start: 0,
+        //     end: 100
+        //   }
+        // ],
         series: [
           {
             data: this.lzdata,
@@ -115,7 +119,7 @@ export default {
       // 绘制图表
       myChart.setOption({
         title: {
-          text: '左右脚X轴偏移'
+          text: '左右踝关节X轴偏移'
         },
         tooltip: {
           trigger: 'axis'
@@ -142,17 +146,17 @@ export default {
         yAxis: {
           type: 'value'
         },
-        dataZoom: [
-          {
-            type: 'inside',
-            start: 0,
-            end: 100
-          },
-          {
-            start: 0,
-            end: 100
-          }
-        ],
+        // dataZoom: [
+        //   {
+        //     type: 'inside',
+        //     start: 0,
+        //     end: 100
+        //   },
+        //   {
+        //     start: 0,
+        //     end: 100
+        //   }
+        // ],
         series: [
           {
             data: this.lxdata,

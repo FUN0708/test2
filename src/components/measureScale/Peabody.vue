@@ -1,9 +1,11 @@
 <template>
-  <div>
+  <div style="margin-top: 20px">
     <el-row>
       <el-col :span="4" style="margin-top: 10px; color: #4b8bea;">Peabody量表检测项目：</el-col>
       <el-col :span="7">
         <!-- 搜索与添加区域 -->
+<!--        <vs-input state="primary" v-model="inputAge" placeholder="请输入月龄" style=" float:left;"/>-->
+<!--        <vs-button border active="true" v-on:click="getProjectByAge()" style="width: 100px">查询</vs-button>-->
         <el-input type="text" placeholder="请输入月龄" v-model="inputAge">
           <el-button slot="append" icon="el-icon-search" v-on:click="getProjectByAge()"></el-button>
         </el-input>
